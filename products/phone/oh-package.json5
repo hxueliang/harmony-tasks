@@ -7,6 +7,7 @@
   "license": "",
   "dependencies": {
     "@sr/utils": "file:../../commons/utils",
-    "@sr/uicomponents": "file:../../commons/uicomponents"
+    "@sr/uicomponents": "file:../../commons/uicomponents",
+    "@sr/home": "file:../../features/home"
   }
 }

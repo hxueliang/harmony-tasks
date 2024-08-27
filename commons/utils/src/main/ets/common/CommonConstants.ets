@@ -32,13 +32,13 @@ export class CommonConstants {
   static readonly SPACE_8: number = 8;
   static readonly SPACE_12: number = 12;
   static readonly SPACE_16: number = 16;
+  static readonly TOP_BAR_HEIGHT: number = 56;
   // maxLines
   static readonly MAX_LINE_TWO: number = 2;
   // swiper duration
   static readonly SWIPER_DURATION: number = 1000;
   // percent
   static readonly FULL_PERCENT: string = '100%';
-
   // delay
   static readonly DELAY_TIME: number = 30;
   // skeleton animation config

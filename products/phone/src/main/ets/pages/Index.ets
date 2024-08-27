@@ -1,33 +1,49 @@
-import { add, CommonConstants, ResManager } from '@sr/utils'
-import { SrTest } from '@sr/uicomponents'
+import { Home } from '@sr/home'
+import { ResManager } from '@sr/utils/src/main/ets/utils/ResManager'
+
+import { TabBarItem } from '../model/TabBar'
 
 @Entry
 @Component
 struct Index {
-  @State one: number = 1
-  @State two: number = 2
-  @State count: number = 0
+  bottomHeight: number = 0
+  @State
+  activeIndex: number = 0
+  tabBars: TabBarItem[] = [
+    { label: 'Home' },
+    { label: 'Profile' },
+  ]
+
+  @Builder
+  TabBarBuilder(item: TabBarItem, index: number) {
+    Column() {
+      // 文字
+      Text(item.label)
+        .fontSize(ResManager.TAB_TEXT_SIZE)
+        .fontWeight(FontWeight.Medium)
+        .fontColor(this.activeIndex === index ? ResManager.COLOR_PRIMARY : ResManager.COLOR_DEFAULT)
+    }
+  }
 
   build() {
-    Column({ space: 20 }) {
-      // 引入静态资源
-      Image(ResManager.IC_HEADER)
-        .width(ResManager.HEADER_WIDTH)
-        .height(ResManager.HEADER_WIDTH)
-        .borderRadius(ResManager.HEADER_WIDTH_RADIUS)
-
-      // 引用commons层的add方法
-      Text(`${this.one} + ${this.two} = ${this.count}`)
-        .fontSize(50)
-        .onClick(() => {
-          this.count = add(this.one, this.two)
-        })
-
-      // 引用commons层的SrTest组件
-      SrTest()
+    Tabs({
+      index: $$this.activeIndex
+    }) {
+      ForEach(this.tabBars, (item: TabBarItem, index: number) => {
+        TabContent() {
+          if (index === 0) {
+            Home()
+          } else if (index === 1) {
+            Home()
+          }
+        }
+        .tabBar(this.TabBarBuilder(item, index))
+        .backgroundColor(ResManager.MAIN_COLOR)
+      })
     }
-    .justifyContent(FlexAlign.Center)
-    .height(CommonConstants.FULL_PERCENT)
-    .width(CommonConstants.FULL_PERCENT)
+    .barPosition(BarPosition.End)
+    .barBackgroundColor('#fff')
+    .scrollable(false)
+    .padding({ bottom: this.bottomHeight })
   }
 }

@@ -9,6 +9,14 @@
       "value": "24fp"
     },
     {
+      "name": "tab_text_size",
+      "value": "20fp"
+    },
+    {
+      "name": "top_tab_text_size",
+      "value": "20fp"
+    },
+    {
       "name": "navigation_margin",
       "value": "24vp"
     },
