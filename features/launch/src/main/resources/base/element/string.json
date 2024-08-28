@@ -3,10 +3,6 @@
     {
       "name": "shared_desc",
       "value": "description"
-    },
-    {
-      "name": "font_family",
-      "value": "Open Sans"
     }
   ]
 }

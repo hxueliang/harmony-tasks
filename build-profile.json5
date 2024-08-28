@@ -66,6 +66,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "launch",
+      "srcPath": "./features/launch",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

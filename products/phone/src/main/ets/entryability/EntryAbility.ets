@@ -11,9 +11,11 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
   }
 
-  onWindowStageCreate(windowStage: window.WindowStage): void {
+  async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+
+    await showStartAd(windowStage)
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
@@ -38,4 +40,10 @@ export default class EntryAbility extends UIAbility {
     // Ability has back to background
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
   }
+}
+
+async function showStartAd(windowStage: window.WindowStage) {
+  const win = await windowStage.createSubWindow('open_sub_window')
+  await win.showWindow()
+  win.setUIContent('pages/LaunchPage')
 }

@@ -8,6 +8,8 @@ export class ResManager {
   static HEADER_WIDTH_RADIUS = $r('app.float.header_width_radius')
   static TAB_TEXT_SIZE = $r('app.float.tab_text_size')
   static TOP_TAB_TEXT_SIZE = $r('app.float.top_tab_text_size')
+  // 文本
+  static FONT_FAMILY = $r('app.string.font_family')
   // 图片
   static IC_HEADER = $r('app.media.ic_header_default')
   // 间距
