@@ -1,10 +1,10 @@
-import { CommonConstants, ResManager } from '@sr/utils'
+import { CommonConstants, ResManager, MyBuilderFunction } from '@sr/utils'
 
 @Component
 export struct SrTopNav {
   @State hasMsg: boolean = true
   @BuilderParam
-  leftIconBuilder: () => void
+  leftIconBuilder: () => void = MyBuilderFunction
   title: string = ''
 
   build() {

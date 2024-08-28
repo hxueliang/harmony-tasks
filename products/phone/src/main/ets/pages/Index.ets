@@ -1,5 +1,5 @@
-import { Home } from '@sr/home'
-import { ResManager } from '@sr/utils/src/main/ets/utils/ResManager'
+import { SideBar } from '@sr/home'
+import { ResManager } from '@sr/utils'
 
 import { TabBarItem } from '../model/TabBar'
 
@@ -26,15 +26,13 @@ struct Index {
   }
 
   build() {
-    Tabs({
-      index: $$this.activeIndex
-    }) {
+    Tabs({ index: $$this.activeIndex }) {
       ForEach(this.tabBars, (item: TabBarItem, index: number) => {
         TabContent() {
           if (index === 0) {
-            Home()
+            SideBar()
           } else if (index === 1) {
-            Home()
+            SideBar()
           }
         }
         .tabBar(this.TabBarBuilder(item, index))

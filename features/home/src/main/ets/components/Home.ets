@@ -8,11 +8,11 @@ import { promptAction } from '@kit.ArkUI'
 @Component
 export struct Home {
   @State searchVal: string = ''
+  @Consume showSideBar: boolean
 
   @Builder
   leftIconBuilder() {
-    Image($r('app.media.ic_slide_bar'))
-      .width(28).aspectRatio(1)
+    Image($r('app.media.ic_menu')).width(26).aspectRatio(1)
   }
 
   @Builder
