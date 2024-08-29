@@ -10,5 +10,6 @@
     "@sr/uicomponents": "file:../../commons/uicomponents",
     "@sr/home": "file:../../features/home",
     "@sr/login": "file:../../features/login",
+    "@sr/profile": "file:../../features/profile"
   }
 }

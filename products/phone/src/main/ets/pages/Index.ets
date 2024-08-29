@@ -1,5 +1,6 @@
 import { promptAction, router } from '@kit.ArkUI'
 import { SideBar } from '@sr/home'
+import { Profile } from '@sr/profile'
 import { ResManager } from '@sr/utils'
 
 import { TabBarItem } from '../model/TabBar'
@@ -7,7 +8,7 @@ import { TabBarItem } from '../model/TabBar'
 @Entry
 @Component
 struct Index {
-  bottomHeight: number = 0
+  bottomHeight: number = 20
   @State
   activeIndex: number = 0
   tabBars: TabBarItem[] = [
@@ -33,7 +34,7 @@ struct Index {
   dynamicLoading(): void {
     try {
       import('@sr/login/src/main/ets/pages/Index')
-      this.userInfo()
+      // this.userInfo()
     } catch (err) {
       console.log('x_log', err.message)
     }
@@ -48,7 +49,7 @@ struct Index {
       router.pushNamedRoute({
         name: 'LoginPage'
       })
-    }, 5000)
+    }, 3000)
   }
 
   build() {
@@ -56,9 +57,9 @@ struct Index {
       ForEach(this.tabBars, (item: TabBarItem, index: number) => {
         TabContent() {
           if (index === 0) {
-            SideBar()
+            SideBar().padding({ top: 50 })
           } else if (index === 1) {
-            SideBar()
+            Profile()
           }
         }
         .tabBar(this.TabBarBuilder(item, index))

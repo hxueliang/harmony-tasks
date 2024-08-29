@@ -90,6 +90,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "profile",
+      "srcPath": "./features/profile",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -15,6 +15,10 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
+    // 应用全屏
+    const win = windowStage.getMainWindowSync()
+    win.setWindowLayoutFullScreen(true)
+
     await showStartAd(windowStage)
 
     windowStage.loadContent('pages/Index', (err) => {
