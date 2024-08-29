@@ -11,6 +11,18 @@
     {
       "name": "color_default",
       "value": "#172B4D"
+    },
+    {
+      "name": "color_success",
+      "value": "#2DCE89"
+    },
+    {
+      "name": "color_warning",
+      "value": "#FB6340"
+    },
+    {
+      "name": "color_danger",
+      "value": "#F5365C"
     }
   ]
 }

@@ -78,6 +78,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "login",
+      "srcPath": "./features/login",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { promptAction, router } from '@kit.ArkUI'
 import { SideBar } from '@sr/home'
 import { ResManager } from '@sr/utils'
 
@@ -23,6 +24,31 @@ struct Index {
         .fontWeight(FontWeight.Medium)
         .fontColor(this.activeIndex === index ? ResManager.COLOR_PRIMARY : ResManager.COLOR_DEFAULT)
     }
+  }
+
+  aboutToAppear(): void {
+    this.dynamicLoading()
+  }
+
+  dynamicLoading(): void {
+    try {
+      import('@sr/login/src/main/ets/pages/Index')
+      this.userInfo()
+    } catch (err) {
+      console.log('x_log', err.message)
+    }
+  }
+
+  /**
+   * 模似未登录，跳登录页
+   */
+  userInfo() {
+    setTimeout(() => {
+      promptAction.showToast({ message: '123' })
+      router.pushNamedRoute({
+        name: 'LoginPage'
+      })
+    }, 5000)
   }
 
   build() {

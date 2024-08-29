@@ -3,6 +3,9 @@ export class ResManager {
   static MAIN_COLOR = $r('app.color.start_window_background')
   static COLOR_PRIMARY = $r('app.color.color_primary')
   static COLOR_DEFAULT = $r('app.color.color_default')
+  static COLOR_SUCCESS = $r('app.color.color_success')
+  static COLOR_WARNING = $r('app.color.color_warning')
+  static COLOR_DANGER = $r('app.color.color_danger')
   // 大小
   static HEADER_WIDTH = $r('app.float.header_width')
   static HEADER_WIDTH_RADIUS = $r('app.float.header_width_radius')

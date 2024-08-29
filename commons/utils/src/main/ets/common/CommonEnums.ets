@@ -38,6 +38,12 @@ export enum TagType {
   HOT = 'hot'
 }
 
+export enum PasswordStrength {
+  STRONG = 'strong',
+  MEDIUM = 'medium',
+  WEAK = 'weak'
+}
+
 /**
  * GridRow column.
  */
@@ -77,7 +83,7 @@ export enum TemplateEnum {
   LG = 6
 }
 
-export enum EventTypeEnum  {
+export enum EventTypeEnum {
   COLLECTED = 'collected_event',
   LIKED = 'liked_event',
   LEARNING = 'learning_event',

@@ -1,4 +1,4 @@
-import { CommonConstants, ResManager, MyBuilderFunction } from '@sr/utils'
+import { CommonConstants, MyBuilderFunction, ResManager } from '@sr/utils'
 
 @Component
 export struct SrTopNav {
@@ -6,6 +6,7 @@ export struct SrTopNav {
   @BuilderParam
   leftIconBuilder: () => void = MyBuilderFunction
   title: string = ''
+  frontColor: Color | ResourceStr = ResManager.COLOR_DEFAULT
 
   build() {
     Row({ space: 20 }) {
@@ -14,12 +15,12 @@ export struct SrTopNav {
       }
       Text(this.title)
         .fontSize(ResManager.TOP_TAB_TEXT_SIZE)
-        .fontColor(ResManager.COLOR_DEFAULT)
+        .fontColor(this.frontColor)
         .fontWeight(FontWeight.Medium)
       Blank()
 
       Stack({ alignContent: Alignment.TopEnd }) {
-        Image($r('app.media.ic_message')).width(28).aspectRatio(1)
+        Image($r('app.media.ic_message')).width(28).aspectRatio(1).fillColor(this.frontColor)
         Text()
           .width(6)
           .aspectRatio(1)
@@ -34,10 +35,9 @@ export struct SrTopNav {
 
 
       Image($r('app.media.ic_rubbish'))
-        .width(28).aspectRatio(1)
+        .width(28).aspectRatio(1).fillColor(this.frontColor)
     }
     .width(CommonConstants.FULL_PERCENT)
     .height(CommonConstants.TOP_BAR_HEIGHT)
-    .backgroundColor(Color.White)
   }
 }
