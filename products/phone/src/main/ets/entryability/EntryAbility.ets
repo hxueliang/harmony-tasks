@@ -1,6 +1,6 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { window } from '@kit.ArkUI';
+import { KeyboardAvoidMode, window } from '@kit.ArkUI';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -15,19 +15,22 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    // 应用全屏
-    const win = windowStage.getMainWindowSync()
-    win.setWindowLayoutFullScreen(true)
-
-    await showStartAd(windowStage)
-
-    windowStage.loadContent('pages/Index', (err) => {
+    // 缓存windowStage
+    AppStorage.setOrCreate('windowStage', windowStage);
+    
+    windowStage.loadContent('pages/DispensePage', (err) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content.');
     });
+
+    // 应用全屏
+    const win = windowStage.getMainWindowSync()
+    win.setWindowLayoutFullScreen(true)
+    // 键盘避让
+    win.getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
   }
 
   onWindowStageDestroy(): void {
@@ -46,8 +49,3 @@ export default class EntryAbility extends UIAbility {
   }
 }
 
-async function showStartAd(windowStage: window.WindowStage) {
-  const win = await windowStage.createSubWindow('open_sub_window')
-  await win.showWindow()
-  win.setUIContent('pages/LaunchPage')
-}

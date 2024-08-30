@@ -1,5 +1,7 @@
 import { SrTopNav } from '@sr/uicomponents';
-import { PasswordStrength, ResManager } from '@sr/utils';
+import { PasswordStrength, ResManager, UserInfo, UserInfoModel } from '@sr/utils';
+import { promptAction, router } from '@kit.ArkUI';
+import { UserStore } from '@sr/datastore';
 
 class FormItem {
   @Track
@@ -31,6 +33,32 @@ export struct Index {
   @State pwd: string = ''
   @State pwdConfirm: string = ''
   @State agreeFlag: boolean = false
+  @State isLogin: boolean = true
+  @State userInfo: UserInfo = new UserInfoModel({} as UserInfo)
+
+  goLogin() {
+    if (!this.agreeFlag) {
+      promptAction.showToast({ message: 'Please choose to agree' })
+      return
+    }
+    if (this.name === 'hxl' && this.pwd === '123123') {
+      this.userInfo = new UserInfoModel({
+        userName: this.name,
+        age: 18,
+        avatar: 'http://gips2.baidu.com/it/u=195724436,3554684702&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960'
+      })
+      UserStore.setUser(JSON.stringify(this.userInfo))
+      router.pushUrl({
+        url: 'pages/Index'
+      })
+    } else {
+      promptAction.showToast({ message: '用户名或密码错误' })
+    }
+  }
+
+  goRegister() {
+
+  }
 
   @Builder
   leftIconBuilder() {
@@ -44,8 +72,7 @@ export struct Index {
         leftIconBuilder: this.leftIconBuilder,
         title: 'Home',
         frontColor: Color.White
-      })
-      // Text(`name: ${this.name}, email: ${this.mail}, flay: ${this.agreeFlag}`).fontColor(Color.White)
+      }).padding({ top: 15 })
 
       Column() {
         Column() {
@@ -74,13 +101,15 @@ export struct Index {
           Image($r('app.media.ic_name')).iconInputStyle()
         }.stackStyle()
 
-        Stack({ alignContent: Alignment.Start }) {
-          TextInput({ text: $$this.mail, placeholder: 'Email' }).textInputStyle()
-          Image($r('app.media.ic_email')).iconInputStyle()
-        }.stackStyle()
+        if (!this.isLogin) {
+          Stack({ alignContent: Alignment.Start }) {
+            TextInput({ text: $$this.mail, placeholder: 'Email' }).textInputStyle()
+            Image($r('app.media.ic_email')).iconInputStyle()
+          }.stackStyle()
+        }
 
         Stack({ alignContent: Alignment.Start }) {
-          TextInput({ text: $$this.pwd, placeholder: 'Password' }).textInputStyle()
+          TextInput({ text: $$this.pwd, placeholder: 'Password' }).type(InputType.Password).textInputStyle()
           Image($r('app.media.ic_lock')).iconInputStyle()
         }.stackStyle()
 
@@ -98,14 +127,25 @@ export struct Index {
           Text('Privacy Policy').fontSize(14).fontColor(ResManager.COLOR_PRIMARY)
         }.width('100%').justifyContent(FlexAlign.Start).margin({ top: 30, left: 26 })
 
-        Button('CREATE ACCOUNT')
-          .onClick(() => {
-            console.log('x_log', this.mail)
-          })
-          .type(ButtonType.Normal)
-          .margin({ top: 30, bottom: 40 })
-          .borderRadius(4)
-          .backgroundColor('#6075dd')
+        Row({ space: 12 }) {
+          Button(this.isLogin ? 'LOGIN' : 'CREATE ACCOUNT')
+            .onClick(() => {
+              if (this.isLogin) {
+                this.goLogin()
+                return
+              }
+              this.goRegister()
+            })
+            .type(ButtonType.Normal)
+            .borderRadius(4)
+            .backgroundColor('#6075dd')
+
+          Text(this.isLogin ? 'create account' : 'go login').fontSize(14)
+            .fontColor(ResManager.COLOR_PRIMARY)
+            .onClick(() => {
+              this.isLogin = !this.isLogin
+            })
+        }.alignItems(VerticalAlign.Center).margin({ top: 30, bottom: 40 })
       }
       .width('100%')
       .backgroundColor('#f4f5f7')

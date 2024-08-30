@@ -1,4 +1,6 @@
+import { UserStore } from '@sr/datastore'
 import { SrTopNav } from '@sr/uicomponents'
+import { router } from '@kit.ArkUI'
 
 const HEADER_WIDTH = 120
 
@@ -80,6 +82,15 @@ export struct Profile {
                 }
               })
             }.columnsTemplate('1fr 1fr 1fr').rowsGap(6).columnsGap(6).padding(12)
+
+            Button('LOGOUT')
+              .onClick(() => {
+                UserStore.setUser(JSON.stringify({}))
+                router.replaceNamedRoute({
+                  name: 'LoginPage'
+                })
+              }).buttonStyles()
+
           }.columnContentStyles()
         }.padding({ left: 12, right: 12, top: 100 })
       }
@@ -103,7 +114,7 @@ function columnContentStyles() {
   .backgroundColor(Color.White)
   .width('100%')
   .borderRadius(4)
-  .padding({ top: 80 })
+  .padding({ top: 80, bottom: 80 })
   .shadow({
     radius: 10,
     type: ShadowType.COLOR,
@@ -175,4 +186,13 @@ function viewAllStyles() {
   .margin({ right: 30, top: 20 })
   .fontSize(12)
   .fontColor('#5E72E4')
+}
+
+@Extend(Button)
+function buttonStyles() {
+  .type(ButtonType.Capsule)
+  .width(200)
+  .backgroundColor('#4c34a0')
+  .borderRadius(4)
+  .margin({ top: 20 })
 }

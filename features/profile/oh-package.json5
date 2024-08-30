@@ -7,6 +7,8 @@
   "license": "Apache-2.0",
   "packageType": "InterfaceHar",
   "dependencies": {
-    "@sr/uicomponents": "file:../../commons/uicomponents"
+    "@sr/uicomponents": "file:../../commons/uicomponents",
+    "@sr/datastore": "file:../../commons/datastore",
+    "@sr/utils": "file:../../commons/utils"
   }
 }

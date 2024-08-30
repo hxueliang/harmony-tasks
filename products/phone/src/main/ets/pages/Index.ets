@@ -1,4 +1,4 @@
-import { promptAction, router } from '@kit.ArkUI'
+import { router } from '@kit.ArkUI'
 import { SideBar } from '@sr/home'
 import { Profile } from '@sr/profile'
 import { ResManager } from '@sr/utils'
@@ -45,11 +45,10 @@ struct Index {
    */
   userInfo() {
     setTimeout(() => {
-      promptAction.showToast({ message: '123' })
       router.pushNamedRoute({
         name: 'LoginPage'
       })
-    }, 3000)
+    }, 2000)
   }
 
   build() {
