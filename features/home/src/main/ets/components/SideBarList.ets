@@ -1,5 +1,7 @@
+import { UserStore } from '@sr/datastore'
 import { ResManager } from '@sr/utils'
 import { ScrollRowItem } from '../model'
+import { router } from '@kit.ArkUI'
 
 @Component
 export struct SideBarList {
@@ -13,10 +15,25 @@ export struct SideBarList {
     { icon: $r("app.media.ic_account"), content: 'Account', select: false },
     { icon: $r('app.media.ic_house'), content: '', select: false },
     { icon: $r('app.media.ic_rocket'), content: 'Getting', select: false },
-    { icon: $r('app.media.ic_logout'), content: 'Logout', select: false },
+    {
+      icon: $r('app.media.ic_logout'),
+      content: 'Logout',
+      select: false,
+      callBack: () => {
+        this.goLogout()
+      }
+    },
   ]
 
+  goLogout() {
+    UserStore.setUser(JSON.stringify({}))
+    router.replaceNamedRoute({
+      name: 'LoginPage'
+    })
+  }
+
   build() {
+
     List({ space: 10 }) {
       ForEach(this.list, (item: ScrollRowItem, index: number) => {
         ListItem() {
@@ -41,6 +58,9 @@ export struct SideBarList {
             .width('100%')
             .onClick(() => {
               this.currentIndex = index
+              if (item.callBack) {
+                item.callBack()
+              }
             })
           } else {
             Divider().strokeWidth(1)

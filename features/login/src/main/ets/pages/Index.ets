@@ -41,7 +41,7 @@ export struct Index {
       promptAction.showToast({ message: 'Please choose to agree' })
       return
     }
-    if (this.name === 'hxl' && this.pwd === '123123') {
+    if (this.name === 'hxl' && this.pwd === '123') {
       this.userInfo = new UserInfoModel({
         userName: this.name,
         age: 18,

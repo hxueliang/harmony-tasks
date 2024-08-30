@@ -1,6 +1,4 @@
-import { UserStore } from '@sr/datastore'
 import { SrTopNav } from '@sr/uicomponents'
-import { router } from '@kit.ArkUI'
 import { fileIo, picker } from '@kit.CoreFileKit'
 import { ImageList, ResManager } from '@sr/utils'
 import { camera, cameraPicker } from '@kit.CameraKit'
@@ -140,13 +138,13 @@ export struct Profile {
             }.columnsTemplate('1fr 1fr 1fr').rowsGap(6).columnsGap(6).padding(12)
 
             // 登出
-            Button('LOGOUT')
-              .onClick(() => {
-                UserStore.setUser(JSON.stringify({}))
-                router.replaceNamedRoute({
-                  name: 'LoginPage'
-                })
-              }).buttonStyles()
+            // Button('LOGOUT')
+            //   .onClick(() => {
+            //     UserStore.setUser(JSON.stringify({}))
+            //     router.replaceNamedRoute({
+            //       name: 'LoginPage'
+            //     })
+            //   }).buttonStyles()
 
           }.columnContentStyles()
         }.padding({ left: 12, right: 12, top: 100 })
