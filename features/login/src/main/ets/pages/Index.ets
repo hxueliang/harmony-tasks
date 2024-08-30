@@ -143,7 +143,9 @@ export struct Index {
           Text(this.isLogin ? 'create account' : 'go login').fontSize(14)
             .fontColor(ResManager.COLOR_PRIMARY)
             .onClick(() => {
-              this.isLogin = !this.isLogin
+              animateTo({ duration: 300 }, () => {
+                this.isLogin = !this.isLogin
+              })
             })
         }.alignItems(VerticalAlign.Center).margin({ top: 30, bottom: 40 })
       }
