@@ -20,7 +20,6 @@ struct DispensePage {
 
   async dispense() {
     const user = await UserStore.getUser()
-    console.log('x_log', JSON.stringify(user))
     if (user.userName) {
       router.replaceUrl({
         url: 'pages/Index'

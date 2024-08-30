@@ -7,6 +7,7 @@ export interface UserInfo {
 export class UserInfoModel implements UserInfo {
   userName: string = ''
   age: number = 0
+  @Track
   avatar: string = ''
 
   constructor(model: UserInfo) {
@@ -14,4 +15,9 @@ export class UserInfoModel implements UserInfo {
     this.age = model.age
     this.avatar = model.avatar
   }
+}
+
+export interface ImageList {
+  /** 图片url */
+  url: string
 }

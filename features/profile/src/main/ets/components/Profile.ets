@@ -1,6 +1,9 @@
 import { UserStore } from '@sr/datastore'
 import { SrTopNav } from '@sr/uicomponents'
 import { router } from '@kit.ArkUI'
+import { fileIo, picker } from '@kit.CoreFileKit'
+import { ImageList, ResManager } from '@sr/utils'
+import { camera, cameraPicker } from '@kit.CameraKit'
 
 const HEADER_WIDTH = 120
 
@@ -14,6 +17,36 @@ export struct Profile {
     $rawfile('Intersect-4.png'),
     $rawfile('Intersect-5.png'),
   ]
+  @State imageList: ImageList[] = []
+  @State avatar: ResourceStr = ''
+  @State showPopup: boolean = false
+
+  // 打开相册
+  async selectImage() {
+    const photo = new picker.PhotoViewPicker()
+    const result = await photo.select({
+      MIMEType: picker.PhotoViewMIMETypes.IMAGE_TYPE,
+      maxSelectNumber: 1,
+    })
+    this.imageList = result.photoUris.map(url => ({ url } as ImageList))
+    this.avatar = this.imageList[0].url
+    this.showPopup = false
+  }
+
+  // 打开相机
+  async openCamera() {
+    const result = await cameraPicker.pick(getContext(), [
+      cameraPicker.PickerMediaType.PHOTO,
+    ], {
+      cameraPosition: camera.CameraPosition.CAMERA_POSITION_BACK // 后置摄像头
+    })
+    const filePath = getContext().filesDir + "/" + Date.now() + '.'
+    let extendName = "jpg"
+    const file = fileIo.openSync(result.resultUri, fileIo.OpenMode.READ_ONLY)
+    fileIo.copyFileSync(file.fd, filePath + extendName) // 拷贝
+    fileIo.closeSync(file.fd)
+    this.avatar = filePath + extendName
+  }
 
   @Builder
   dataItemBuilder(count: number | string, label: string) {
@@ -28,6 +61,27 @@ export struct Profile {
     Image($r('app.media.ic_back')).width(26).aspectRatio(1).fillColor(Color.White)
   }
 
+  @Builder
+  getSheetBuilder() {
+    List() {
+      ListItem() {
+        Row() {
+          Text('phone album').albumTextStyles().onClick(() => {
+            this.selectImage()
+          })
+        }
+      }.width('100%')
+
+      ListItem() {
+        Row() {
+          Text('watch for a chance').albumTextStyles().onClick(() => {
+            this.openCamera()
+          })
+        }
+      }.width('100%')
+    }.margin({ top: 24, left: 20, right: 20 }).divider({ strokeWidth: 1, color: 'rgba(0,0,0,0.1)', })
+  }
+
   build() {
     Column() {
       // 顶部导航
@@ -39,7 +93,9 @@ export struct Profile {
       Scroll() {
         Stack({ alignContent: Alignment.Top }) {
           // 头像
-          Image($r('app.media.ic_header_default')).headerStyles()
+          Image(this.avatar || $r('app.media.ic_header_default')).headerStyles().onClick(() => {
+            this.showPopup = !this.showPopup
+          })
           Column() {
             // 两个标签
             Row({ space: 12 }) {
@@ -83,6 +139,7 @@ export struct Profile {
               })
             }.columnsTemplate('1fr 1fr 1fr').rowsGap(6).columnsGap(6).padding(12)
 
+            // 登出
             Button('LOGOUT')
               .onClick(() => {
                 UserStore.setUser(JSON.stringify({}))
@@ -95,6 +152,11 @@ export struct Profile {
         }.padding({ left: 12, right: 12, top: 100 })
       }
     }.columnBoxStyles()
+    .bindSheet($$this.showPopup, this.getSheetBuilder(), {
+      showClose: true,
+      detents: [180, SheetSize.MEDIUM, SheetSize.LARGE],
+      height: 180
+    })
   }
 }
 
@@ -106,6 +168,11 @@ function headerStyles() {
   .zIndex(10)
   .offset({
     y: HEADER_WIDTH / -2
+  })
+  .shadow({
+    radius: 10,
+    type: ShadowType.COLOR,
+    color: 'rgba(0,0,0,0.1)',
   })
 }
 
@@ -195,4 +262,9 @@ function buttonStyles() {
   .backgroundColor('#4c34a0')
   .borderRadius(4)
   .margin({ top: 20 })
+}
+
+@Extend(Text)
+function albumTextStyles() {
+  .fontSize(20).fontWeight(500).height(50).fontColor(ResManager.COLOR_DEFAULT)
 }

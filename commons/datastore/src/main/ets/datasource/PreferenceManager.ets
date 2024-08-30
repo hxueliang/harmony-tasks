@@ -15,9 +15,9 @@ export class UserStore {
     await store.flush()
   }
 
-  static async getUser(context?: Context) {
+  static getUser(context?: Context) {
     const store = UserStore.getStore(context)
-    const res = await store.get(UserStore.USER_KEY, '') as string
+    const res = store.getSync(UserStore.USER_KEY, '') as string
     return res ? JSON.parse(res) as UserInfo : {} as UserInfo
   }
 

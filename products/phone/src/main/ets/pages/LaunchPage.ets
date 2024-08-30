@@ -59,6 +59,7 @@ struct LaunchPage {
       Button('Get Started')
         .width('90%')
         .backgroundColor('#f7fafc')
+        .padding(13)
         .fontColor('#172B4D')
         .type(ButtonType.Normal)
         .borderRadius(4)
